@@ -1,0 +1,14 @@
+# Core dependencies
+fastapi
+uvicorn
+langgraph
+langchain-ollama
+langchain-tavily
+httpx
+python-multipart
+
+# GPU-accelerated PyTorch (CUDA 12.2)
+pip install torch==2.6.0 torchvision==0.21.0 torchaudio==2.6.0 --index-url https://download.pytorch.org/whl/cu122
+
+# EasyOCR pinned to a CUDA-compatible version
+easyocr==1.7.1

@@ -1,0 +1,15 @@
+version: '3.8'
+x-build: &buildkit
+  context: .
+  dockerfile: Dockerfile
+services:
+  ai-backend:
+    build: *buildkit
+    network_mode: "host"
+    env_file:
+      - .env
+    volumes:
+      - ./backend:/app/backend
+      - ./data:/app/data
+      - ./storage:/app/storage
+    restart: always

@@ -125,6 +125,18 @@
       display: none;
     }
 
+    .upload-spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid #3b82f6;
+      border-top: 3px solid transparent;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      display: none;
+      margin-left: 10px;
+      align-self: center;
+    }
+
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
@@ -139,10 +151,11 @@
     <div id="tool-drawer">
       <div class="drawer-section">
         <h2>Uploaded Files & OCR Text</h2>
-        <form id="upload-form" enctype="multipart/form-data">
-          <input type="file" name="file" accept=".png, .jpg, .jpeg" />
-          <button type="submit">Upload</button>
-        </form>
+        <form id="upload-form" enctype="multipart/form-data" style="display: flex; gap: 10px;">
+          <input type="file" name="file" id="upload-input" accept=".png, .jpg, .jpeg" />
+          <button type="submit" id="upload-button">Upload</button>
+          <div class="upload-spinner" id="upload-spinner"></div>
+        </form>        
         <ul id="file-list"></ul>
       </div>
 
@@ -262,16 +275,42 @@
 
     document.getElementById('upload-form').addEventListener('submit', async (e) => {
       e.preventDefault();
-      const formData = new FormData(e.target);
 
-      const response = await fetch('/upload_file', {
-        method: 'POST',
-        body: formData
-      });
+      const input = document.getElementById('upload-input');
+      const button = document.getElementById('upload-button');
+      const spinner = document.getElementById('upload-spinner');
 
-      const result = await response.json();
-      alert(`Uploaded: ${result.filename}`);
-      refreshFileList();
+      if (!input.files.length) return;
+
+      // Disable UI and show spinner
+      input.disabled = true;
+      button.style.display = 'none';
+      spinner.style.display = 'inline-block';
+
+      const formData = new FormData();
+      formData.append('file', input.files[0]);
+
+      try {
+        const response = await fetch('/upload_file', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+        alert(`Uploaded: ${result.filename}`);
+        refreshFileList();
+
+        // Clear input
+        input.value = '';
+      } catch (err) {
+        alert("Upload failed.");
+        console.error(err);
+      }
+
+      // Restore UI
+      input.disabled = false;
+      button.style.display = 'inline-block';
+      spinner.style.display = 'none';
     });
 
     document.getElementById('chat-form').addEventListener('submit', sendChat);

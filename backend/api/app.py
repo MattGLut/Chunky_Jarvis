@@ -86,7 +86,8 @@ async def available_tools():
         "llm": "General knowledge queries (definitions, explanations)",
         "ocr": "Answer questions about uploaded document text",
         "dealer_risk": "Analyze dealer repossession risk by dealer_id or lotname",
-        "research": "Search the web for up-to-date information"
+        "dfp_db": "Query the FloorplanXpress database",
+        # "research": "Search the web for up-to-date information",
     }
 
     # Add the cached dealer count

@@ -1,10 +1,9 @@
 from backend.utils.supervisor_state import SupervisorState
 from backend.tools.fake_bind_tools import FakeBindToolsWrapper
 from backend.utils.dfp_schema import DFP_SCHEMA, DFP_FEWSHOT_EXAMPLES
-from backend.tools.dfp_db_tool import DFPDatabaseTool
 import time
 
-def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper, db_tool: DFPDatabaseTool) -> SupervisorState:
+def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper) -> SupervisorState:
     current_task = state["task_queue"][0]
     print(f"[DFP DB Node Task]: {current_task}")
 
@@ -32,7 +31,7 @@ def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper, db_tool:
                 raise ValueError("Generated SQL does not appear valid or safe.")
 
             # Step 2: Run the query
-            raw_result = db_tool.invoke(sql_query)
+            raw_result = db_agent.db_tool.invoke(sql_query)
             break  # Exit loop on success
 
         except Exception as e:
@@ -54,7 +53,13 @@ def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper, db_tool:
             f"Please explain the result above in plain language."
         )
         explanation_response = db_agent.llm.invoke(explain_prompt)
-        final_result = explanation_response.content.strip() if hasattr(explanation_response, "content") else str(explanation_response).strip()
+        final_result = (
+            f"User Request: {current_task}
+"
+            f"SQL Query: {sql_query}
+"
+            f"Explanation: {explanation_response.content.strip() if hasattr(explanation_response, 'content') else str(explanation_response).strip()}"
+        )
 
     print(f"[DFP DB Node Result]: {final_result}")
 

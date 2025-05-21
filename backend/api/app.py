@@ -86,8 +86,12 @@ async def available_tools():
         "llm": "General knowledge queries (definitions, explanations)",
         "ocr": "Answer questions about uploaded document text",
         "dealer_risk": "Analyze dealer repossession risk by dealer_id or lotname",
-        # "research": "Search the web for up-to-date information"
+        "research": "Search the web for up-to-date information"
     }
-    return JSONResponse(content={"tools": tools})
+
+    # Add the cached dealer count
+    dealer_count = len(dealer_risk_cache)
+    return JSONResponse(content={"tools": tools, "dealer_risk_count": dealer_count})
+
 
 app.mount("/", StaticFiles(directory="frontend", html=True), name="static")

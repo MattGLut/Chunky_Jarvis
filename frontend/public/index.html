@@ -210,14 +210,17 @@
       }
       html += "</div>";
 
+      if (result.dealer_risk_count !== undefined) {
+        html += `<p style="margin-top: 10px;"><strong>Cached Dealer Risk Index:</strong> ${result.dealer_risk_count} dealers loaded</p>`;
+      }
+
       html += "<h3>How to Use</h3><div>";
       html += "<div><b>OCR Example:</b> 'Using your OCR tools, tell me what the contents of image.png are.'</div>";
       html += "<div><b>OCR Tips:</b> 'OCR currently looks for exact file names. Asking for the tool specifically will help.'</div>";
       html += "<div><b>Dealer Risk Example:</b> 'What is the viper risk score for dealer_id 12345?'</div>";
-      html += "<div><b>Dealer Risk Tips:</b> 'Dealer Risk currently looks for dealer_id or lotname.  Asking for the tool specifically will help.'</div>";
+      html += "<div><b>Dealer Risk Tips:</b> 'Dealer Risk currently looks for dealer_id or lotname. Asking for the tool specifically will help.'</div>";
       html += "<div><b>LLM Example:</b> 'Explain what a floorplan loan is.'</div>";
-      html += "<div><b>LLM Tips:</b> 'LLM currently uses the Mistral model.  Asking for the tool specifically will help.'</div>";
-      // html += "<div><b>Research Example:</b> 'What is the latest news on the stock market? Use the research tool.'</div>";
+      html += "<div><b>LLM Tips:</b> 'LLM currently uses the Mistral model. Asking for the tool specifically will help.'</div>";
       html += "</div>";
 
       toolsInfo.innerHTML = html;

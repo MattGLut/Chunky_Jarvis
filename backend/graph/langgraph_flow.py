@@ -48,7 +48,7 @@ graph.add_node("supervisor", lambda state: supervisor_node(state, supervisor_llm
 # graph.add_node("research", lambda state: research_agent_node(state, research_agent, reflection_llm))
 graph.add_node("llm", lambda state: llm_agent_node(state, llm_agent))
 graph.add_node("ocr", lambda state: ocr_agent_node(state, ocr_agent))
-graph.add_node("dealer_risk", lambda state: dealer_risk_node(state, dealer_risk_agent, dealer_identifier_tool))
+graph.add_node("dealer_risk", lambda state: dealer_risk_node(state, dealer_risk_agent, dealer_identifier_tool, dealer_risk_tool))
 
 # Entry
 graph.set_entry_point("supervisor")

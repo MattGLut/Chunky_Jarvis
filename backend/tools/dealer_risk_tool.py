@@ -51,7 +51,6 @@ class DealerRiskTool:
         match = None
         dealer_id_match = None
 
-        # Search by dealer_id or lotname (case-insensitive)
         for dealer_id, dealer_data in dealer_risk_cache.items():
             if dealer_identifier.lower() in dealer_id.lower() or dealer_identifier.lower() in dealer_data.get("lotname", "").lower():
                 match = dealer_data
@@ -61,35 +60,31 @@ class DealerRiskTool:
         if not match:
             return f"No dealer risk data found for identifier '{dealer_identifier}'."
 
-        # Extract only relevant features from match
         selected_features = {
             k: match.get(k, None) for k in dealer_risk_feature_importance.keys()
         }
 
-        # Format the selected features for prompt
         formatted_features = "\n".join(
             f"- {k}: {v if v is not None else 'null'}"
             for k, v in selected_features.items()
         )
 
-        # Optionally include the global importance values
         importance_summary = "\n".join(
             f"- {k}: {round(weight * 100, 2)}%"
             for k, weight in sorted(dealer_risk_feature_importance.items(), key=lambda x: x[1], reverse=True)
         )
 
         prompt = (
-            f"Dealer Risk Analysis Input:\n"
-            f"Dealer Lotname: {match.get('lotname', 'N/A')}\n"
-            f"Dealer ID: {dealer_id_match}\n"
+            f"You are an expert in automotive lending risk analysis. Use the dealer's financial and behavioral data below to generate a concise, structured risk assessment.\n\n"
+            f"Dealer: {match.get('lotname', 'N/A')} (ID: {dealer_id_match})\n"
             f"Repo Probability: {match.get('repo_probability', 'N/A'):.6f}\n\n"
-            f"Selected Features:\n{formatted_features}\n\n"
-            f"Model Feature Importances:\n{importance_summary}\n\n"
+            f"Selected Feature Values:\n{formatted_features}\n\n"
+            f"Feature Importances (model weights):\n{importance_summary}\n\n"
             "Task:\n"
             "- Explain what the repo risk means for this dealer\n"
             "- Identify the 3 most concerning features\n"
-            "- Recommend actions to mitigate risk\n"
-            "Be concise, accurate, and avoid repeating feature names unnecessarily."
+            "- Recommend actions to mitigate the dealer's risk\n"
+            "Respond clearly and professionally."
         )
 
         result = self.llm.invoke(prompt)

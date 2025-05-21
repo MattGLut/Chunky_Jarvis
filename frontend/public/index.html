@@ -43,16 +43,12 @@
       overflow: hidden;
     }
     #tool-drawer {
-      width: 300px;
+      width: 380px;
       background-color: #1e1e1e;
       padding: 10px;
       border-right: 1px solid #333;
       display: flex;
       flex-direction: column;
-      transition: transform 0.3s ease-in-out;
-    }
-    #tool-drawer.collapsed {
-      transform: translateX(-100%);
     }
     .drawer-section {
       flex: 1;
@@ -123,7 +119,6 @@
 <body>
   <header>
     <span>LangGraph Agent POC</span>
-    <button id="drawer-toggle">Toggle Tools</button>
   </header>
 
   <div class="container">
@@ -228,12 +223,6 @@
 
       document.getElementById('chat-input').value = '';
     }
-
-    document.getElementById('drawer-toggle').addEventListener('click', () => {
-      const drawer = document.getElementById('tool-drawer');
-      drawer.classList.toggle('collapsed');
-    });
-
 
     document.getElementById('upload-form').addEventListener('submit', async (e) => {
       e.preventDefault();

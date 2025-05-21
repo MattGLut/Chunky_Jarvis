@@ -14,7 +14,8 @@ def dealer_risk_node(state: SupervisorState, dealer_risk_agent: FakeBindToolsWra
     dealer_id, llm_guess = identifier_tool.identify_dealer(current_task)
 
     if dealer_id:
-        result = dealer_risk_tool.invoke(dealer_id)
+        response = dealer_risk_tool.invoke(dealer_id)
+        result = response.content.strip() if hasattr(response, "content") else str(response).strip()
     else:
         if llm_guess and llm_guess != "No match found":
             result = f"I interpreted your input as referring to '{llm_guess}', but could not find this dealer in my records."

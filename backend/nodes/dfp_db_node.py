@@ -1,7 +1,7 @@
 from backend.utils.supervisor_state import SupervisorState
 from backend.tools.fake_bind_tools import FakeBindToolsWrapper
 from backend.utils.dfp_schema import DFP_SCHEMA, DFP_FEWSHOT_EXAMPLES
-from backend.tools.dfp_database_tool import DFPDatabaseTool
+from backend.tools.dfp_db_tool import DFPDatabaseTool
 import time
 
 def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper, db_tool: DFPDatabaseTool) -> SupervisorState:

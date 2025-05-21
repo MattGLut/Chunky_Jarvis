@@ -1,5 +1,3 @@
-# backend/utils/dfp_schema.py
-
 DFP_SCHEMA = """
 Tables:
 
@@ -18,7 +16,8 @@ units (
     reverse_on DATETIME,
     repo_on DATETIME,
     sold_on DATETIME,
-    payoff_on DATETIME
+    payoff_on DATETIME,
+    repo INT
 )
 """
 
@@ -35,6 +34,10 @@ Enums:
     999: 'Application'
     2000: 'Prospect'
     2002: 'Hidden Prospect'
+
+  units.repo:
+    1: 'Repo'
+    2: 'Not Repo'
 """
 
 DFP_RELATIONSHIPS = """
@@ -55,4 +58,7 @@ A: SELECT COUNT(*) FROM units WHERE payoff_on IS NULL AND reverse_on IS NULL AND
 
 Q: How many units are sold, but not yet paid off?
 A: SELECT COUNT(*) FROM units WHERE sold_on IS NOT NULL AND payoff_on IS NULL;
+
+Q: How many dealers are in dfp?
+A: SELECT COUNT(*) FROM dealers;
 """

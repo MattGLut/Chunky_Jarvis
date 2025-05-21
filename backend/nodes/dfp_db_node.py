@@ -9,7 +9,8 @@ def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper, db_tool:
 
     try:
         prompt = (
-            "You are a SQL assistant with read-only access to a MySQL database for an automotive finance company. "
+            "You are a SQL assistant with read-only access to a MySQL database for an automotive finance company.\n\n"
+            "The backend app is called 'DFP' and users may refer to it as such.\n\n"
             "Your job is to write safe, minimal SELECT queries based on user requests.\n\n"
             "Do NOT include DELETE, UPDATE, INSERT, or DDL statements. Only SELECT queries.\n\n"
             "Do not include any other text or comments in your response. Just the SQL query.\n\n"

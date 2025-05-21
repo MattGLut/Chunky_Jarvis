@@ -170,21 +170,21 @@
       const result = await response.json();
       const toolsInfo = document.getElementById('tools-info');
 
-      let html = "<ul>";
+      let html = "<div>";
       for (const [tool, desc] of Object.entries(result.tools)) {
-        html += `<li><strong>${tool}</strong>: ${desc}</li>`;
+        html += `<div><strong>${tool}</strong>: ${desc}</div>`;
       }
-      html += "</ul>";
+      html += "</div>";
 
-      html += "<h3>How to Use</h3><ul>";
-      html += "<li><b>OCR Example:</b> 'Using your OCR tools, tell me what the contents of image.png are.'</li>";
-      html += "<li><b>OCR Tips:</b> 'OCR currently looks for exact file names. Asking for the tool specifically will help.'</li>";
-      html += "<li><b>Dealer Risk Example:</b> 'What is the viper risk score for dealer_id 12345?'</li>";
-      html += "<li><b>Dealer Risk Tips:</b> 'Dealer Risk currently looks for dealer_id or lotname.  Asking for the tool specifically will help.'</li>";
-      html += "<li><b>LLM Example:</b> 'Explain what a floorplan loan is.'</li>";
-      html += "<li><b>LLM Tips:</b> 'LLM currently uses the Mistral model.  Asking for the tool specifically will help.'</li>";
-      // html += "<li><b>Research Example:</b> 'What is the latest news on the stock market? Use the research tool.'</li>";
-      html += "</ul>";
+      html += "<h3>How to Use</h3><div>";
+      html += "<div><b>OCR Example:</b> 'Using your OCR tools, tell me what the contents of image.png are.'</div>";
+      html += "<div><b>OCR Tips:</b> 'OCR currently looks for exact file names. Asking for the tool specifically will help.'</div>";
+      html += "<div><b>Dealer Risk Example:</b> 'What is the viper risk score for dealer_id 12345?'</div>";
+      html += "<div><b>Dealer Risk Tips:</b> 'Dealer Risk currently looks for dealer_id or lotname.  Asking for the tool specifically will help.'</div>";
+      html += "<div><b>LLM Example:</b> 'Explain what a floorplan loan is.'</div>";
+      html += "<div><b>LLM Tips:</b> 'LLM currently uses the Mistral model.  Asking for the tool specifically will help.'</div>";
+      // html += "<div><b>Research Example:</b> 'What is the latest news on the stock market? Use the research tool.'</div>";
+      html += "</div>";
 
       toolsInfo.innerHTML = html;
     }

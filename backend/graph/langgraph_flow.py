@@ -36,7 +36,7 @@ ocr_agent = FakeBindToolsWrapper(ollama_model, [ocr_tool])
 # math_agent = FakeBindToolsWrapper(ollama_model, [MathTool()])
 llm_agent = FakeBindToolsWrapper(ollama_model, [])
 dealer_risk_agent = FakeBindToolsWrapper(ollama_model, [dealer_risk_tool])
-dfp_db_agent = FakeBindToolsWrapper(ollama_model, [dfp_db_tool])
+dfp_db_agent = FakeBindToolsWrapper(ollama_model, [])
 
 # print(f"Research agent tools: {[tool.name for tool in research_agent.tool_dict.values()]}")
 # print(f"Math agent tools: {[tool.name for tool in math_agent.tool_dict.values()]}")
@@ -52,7 +52,7 @@ graph.add_node("supervisor", lambda state: supervisor_node(state, supervisor_llm
 graph.add_node("llm", lambda state: llm_agent_node(state, llm_agent))
 graph.add_node("ocr", lambda state: ocr_agent_node(state, ocr_agent))
 graph.add_node("dealer_risk", lambda state: dealer_risk_node(state, dealer_risk_agent, dealer_identifier_tool, dealer_risk_tool))
-graph.add_node("dfp_db", lambda state: dfp_db_node(state, dfp_db_agent))
+graph.add_node("dfp_db", lambda state: dfp_db_node(state, dfp_db_agent, dfp_db_tool))
 # Entry
 graph.set_entry_point("supervisor")
 

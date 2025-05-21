@@ -30,12 +30,12 @@ dealer_risk_tool = DealerRiskTool(api_url=os.getenv("DORA_API_URL", ""), api_key
 dealer_identifier_tool = DealerIdentificationTool(llm=ollama_model)
 
 ocr_agent = FakeBindToolsWrapper(ollama_model, [ocr_tool])
-research_agent = FakeBindToolsWrapper(ollama_model, [tavily_tool])
+# research_agent = FakeBindToolsWrapper(ollama_model, [tavily_tool])
 # math_agent = FakeBindToolsWrapper(ollama_model, [MathTool()])
 llm_agent = FakeBindToolsWrapper(ollama_model, [])
 dealer_risk_agent = FakeBindToolsWrapper(ollama_model, [dealer_risk_tool])
 
-print(f"Research agent tools: {[tool.name for tool in research_agent.tool_dict.values()]}")
+# print(f"Research agent tools: {[tool.name for tool in research_agent.tool_dict.values()]}")
 # print(f"Math agent tools: {[tool.name for tool in math_agent.tool_dict.values()]}")
 print(f"LLM agent tools: {[tool.name for tool in llm_agent.tool_dict.values()]}")
 print(f"OCR agent tools: {[tool.name for tool in ocr_agent.tool_dict.values()]}")
@@ -45,7 +45,7 @@ print(f"Dealer risk agent tools: {[tool.name for tool in dealer_risk_agent.tool_
 graph = StateGraph(SupervisorState)
 graph.add_node("supervisor", lambda state: supervisor_node(state, supervisor_llm))
 # graph.add_node("math", lambda state: math_agent_node(state, math_agent))
-graph.add_node("research", lambda state: research_agent_node(state, research_agent, reflection_llm))
+# graph.add_node("research", lambda state: research_agent_node(state, research_agent, reflection_llm))
 graph.add_node("llm", lambda state: llm_agent_node(state, llm_agent))
 graph.add_node("ocr", lambda state: ocr_agent_node(state, ocr_agent))
 graph.add_node("dealer_risk", lambda state: dealer_risk_node(state, dealer_risk_agent, dealer_identifier_tool))
@@ -59,7 +59,7 @@ graph.add_conditional_edges(
     lambda s: END if s["done"] else s["next_agent"],
     {
         # "math": "math",
-        "research": "research",
+        # "research": "research",
         "llm": "llm",
         "ocr": "ocr",
         "dealer_risk": "dealer_risk"
@@ -68,7 +68,7 @@ graph.add_conditional_edges(
 
 # After agent nodes, return to supervisor if tasks remain
 # graph.add_conditional_edges("math", lambda s: END if s["done"] else "supervisor", {})
-graph.add_conditional_edges("research", lambda s: END if s["done"] else "supervisor", {})
+# graph.add_conditional_edges("research", lambda s: END if s["done"] else "supervisor", {})
 graph.add_conditional_edges("llm", lambda s: END if s["done"] else "supervisor", {})
 graph.add_conditional_edges("ocr", lambda s: END if s["done"] else "supervisor", {})
 graph.add_conditional_edges("dealer_risk", lambda s: END if s["done"] else "supervisor", {})

@@ -5,11 +5,22 @@ from fastapi import Request
 from pydantic import BaseModel
 import shutil
 import os
+import logging
 from backend.utils.ocr_store import ocr_cache
 from backend.graph.langgraph_flow import app as langgraph_app, ocr_tool, dealer_risk_tool
 from backend.utils.dealer_risk_store import dealer_risk_cache
+from starlette.middleware.base import BaseHTTPMiddleware
+from datetime import datetime
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
+class RequestLoggingMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        logging.info(f"[{datetime.utcnow().isoformat()}] Incoming request: {request.method} {request.url.path}")
+        return await call_next(request)
 
 app = FastAPI()
+app.add_middleware(RequestLoggingMiddleware)
 
 UPLOAD_DIR = "ocr_files"
 os.makedirs(UPLOAD_DIR, exist_ok=True)

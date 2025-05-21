@@ -7,7 +7,8 @@ langchain-tavily
 httpx
 python-multipart
 pymysql
-pandas
+numpy==1.26.4
+pandas==2.2.2
 cryptography
 python-dotenv
 pandasai

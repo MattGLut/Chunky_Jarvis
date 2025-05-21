@@ -33,4 +33,3 @@ def dealer_risk_node(state: SupervisorState, dealer_risk_agent: FakeBindToolsWra
         "next_agent": "",
         "done": not new_queue
     }
-

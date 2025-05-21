@@ -8,10 +8,9 @@ class DealerIdentificationTool:
     def __init__(self, llm=None):
         self.llm = llm  # Optional for LLM-assisted fallback
 
-    def identify_dealer(self, user_input: str) -> str | None:
+    def identify_dealer(self, user_input: str) -> tuple[str | None, str | None]:
         print(f"[DealerIdentifier] Analyzing input: {user_input}")
 
-        # 1. Direct ID match (4-8 digit numbers)
         id_candidates = re.findall(r'\b\d{4,8}\b', user_input)
         print(f"[DealerIdentifier] ID Candidates: {id_candidates}")
 
@@ -19,18 +18,16 @@ class DealerIdentificationTool:
         for candidate in id_candidates:
             if candidate in known_ids:
                 print(f"[DealerIdentifier] Found exact dealer_id: {candidate}")
-                return candidate
+                return candidate, candidate
 
-        # 2. Fuzzy lotname match
         lotnames = {v.get("lotname", "").lower(): k for k, v in dealer_risk_cache.items()}
         close_matches = get_close_matches(user_input.lower(), lotnames.keys(), n=1, cutoff=0.6)
         if close_matches:
             matched_name = close_matches[0]
             dealer_id = lotnames[matched_name]
             print(f"[DealerIdentifier] Soft matched lotname '{matched_name}' to dealer_id: {dealer_id}")
-            return dealer_id
+            return dealer_id, matched_name
 
-        # 3. Optional LLM-assisted extraction
         if self.llm:
             prompt = (
                 "You are tasked with identifying an automobile dealership from user input. Your job is to return either the dealer_id (as a number) "
@@ -85,7 +82,7 @@ class DealerIdentificationTool:
                 return dealer_id, result
 
             print("[DealerIdentifier] LLM result did not match known dealers.")
-            return None, result  # LLM found something, but no match
+            return None, result
 
         print("[DealerIdentifier] No dealer match found.")
         return None, None

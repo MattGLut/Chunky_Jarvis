@@ -155,8 +155,8 @@
           <input type="file" name="file" id="upload-input" accept=".png, .jpg, .jpeg" />
           <button type="submit" id="upload-button">Upload</button>
           <div class="upload-spinner" id="upload-spinner"></div>
-        </form>        
-        <ul id="file-list"></ul>
+        </form>
+        <div id="file-list"></div>
       </div>
 
       <div class="drawer-section">
@@ -187,9 +187,9 @@
       const fileList = document.getElementById('file-list');
       fileList.innerHTML = '';
       result.forEach(fileEntry => {
-        const li = document.createElement('li');
-        li.innerHTML = `<strong>${fileEntry.filename}</strong><br><pre>${fileEntry.ocr_text.slice(0, 300)}${fileEntry.ocr_text.length > 300 ? '...' : ''}</pre>`;
-        fileList.appendChild(li);
+        const div = document.createElement('div');
+        div.innerHTML = `<strong>${fileEntry.filename}</strong><br><pre>${fileEntry.ocr_text.slice(0, 300)}${fileEntry.ocr_text.length > 300 ? '...' : ''}</pre>`;
+        fileList.appendChild(div);
       });
     }
 

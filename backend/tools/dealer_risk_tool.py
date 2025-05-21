@@ -12,10 +12,9 @@ class DealerRiskTool:
 
     def load_risk_index(self):
         print("[DealerRiskTool] Loading dealer risk index from API...")
-        headers = {"Authorization": f"Bearer {self.api_key}"}
+        headers = {"x-api-key": self.api_key}
 
         print(f"[DealerRiskTool] Fetching: {self.api_url}/dealer_risk_index")
-        print(f"[DealerRiskTool] Headers: {headers}")
 
         response = requests.get(f"{self.api_url}/dealer_risk_index", headers=headers)
 

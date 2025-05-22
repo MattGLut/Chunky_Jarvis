@@ -3,6 +3,8 @@ from backend.tools.fake_bind_tools import FakeBindToolsWrapper
 from backend.utils.dfp_schema import DFP_SCHEMA, DFP_FEWSHOT_EXAMPLES
 from backend.tools.dfp_db_tool import DFPDatabaseTool
 import time
+from datetime import datetime
+import pytz
 
 def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper, db_tool: DFPDatabaseTool) -> SupervisorState:
     current_task = state["task_queue"][0]
@@ -22,6 +24,7 @@ def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper, db_tool:
                 f"Use the following schema to generate a safe SELECT query in response to the user request.\n\n"
                 f"Commonly in dfp, units are reversed, marked as such by the reverse_on column.\n\n"
                 f"Units with non empty values in this reverse_on column are not to be included in queries unless specifically asked for.\n\n"
+                f"Today's date and time is {datetime.now(pytz.timezone('America/Chicago')).strftime('%Y-%m-%d %H:%M:%S')}\n\n"
                 f"Schema:\n{DFP_SCHEMA}\n\n"
                 f"Here are some examples:\n{DFP_FEWSHOT_EXAMPLES}\n\n"
                 f"User request: {current_task}\nSQL query:"

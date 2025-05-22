@@ -13,6 +13,7 @@ cryptography
 python-dotenv
 pandasai
 tabulate
+pytz
 
 # EasyOCR pinned to a CUDA-compatible version
 easyocr==1.7.1

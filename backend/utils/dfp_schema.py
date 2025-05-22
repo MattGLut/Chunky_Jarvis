@@ -19,6 +19,15 @@ units (
     payoff_on DATETIME, # The date the unit was paid off
     repo INT # The repossession status of the unit
 )
+
+dealer_users (
+    id INT, # The unique identifier for the dealer user
+    dealer_id INT, # The dealer that the user belongs to
+    email VARCHAR, # The email of the dealer user
+    first_name VARCHAR, # The first name of the dealer user
+    last_name VARCHAR, # The last name of the dealer user
+    accepted_new_terms_at DATETIME # The date the dealer user accepted the new terms and conditions of the DFP system
+)
 """
 
 DFP_ENUMS = """

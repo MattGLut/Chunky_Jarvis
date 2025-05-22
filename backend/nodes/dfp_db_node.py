@@ -18,7 +18,10 @@ def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper, db_tool:
             # Step 1: Generate SQL using LLM with schema and few-shot context
             prompt = (
                 f"You are a SQL assistant for an automotive finance system. "
+                f"DFP stands for Direct Floor Plan, and is a backend software for our automotive flooring company. User requests may reference DFP."
                 f"Use the following schema to generate a safe SELECT query in response to the user request.\n\n"
+                f"Commonly in dfp, units are reversed, marked as such by the reverse_on column.\n\n"
+                f"Units with non empty values in this reverse_on column are not to be included in queries unless specifically asked for.\n\n"
                 f"Schema:\n{DFP_SCHEMA}\n\n"
                 f"Here are some examples:\n{DFP_FEWSHOT_EXAMPLES}\n\n"
                 f"User request: {current_task}\nSQL query:"

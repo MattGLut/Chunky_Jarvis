@@ -2,22 +2,22 @@ DFP_SCHEMA = """
 Tables:
 
 dealers (
-    id INT,
-    lotname VARCHAR,
-    active INT,
-    created_at DATETIME
+    id INT, # The unique identifier for the dealer
+    lotname VARCHAR, # The name of the dealer's lot
+    active INT, # The active status of the dealer
+    created_at DATETIME # The date the dealer was created
 )
 
 units (
-    id INT,
-    dealer_id INT,
-    floored_on DATETIME,
-    first_floored_on DATETIME,
-    reverse_on DATETIME,
-    repo_on DATETIME,
-    sold_on DATETIME,
-    payoff_on DATETIME,
-    repo INT
+    id INT, # The unique identifier for the unit
+    dealer_id INT, # The dealer that the unit belongs to
+    floor_on DATETIME, # The date the unit was most recently floored
+    first_floored_on DATETIME, # The date the unit was first floored
+    reverse_on DATETIME, # The date the unit was reversed
+    repo_on DATETIME, # The date the unit was reposessed
+    sold_on DATETIME, # The date the unit was sold
+    payoff_on DATETIME, # The date the unit was paid off
+    repo INT # The repo status of the unit
 )
 """
 

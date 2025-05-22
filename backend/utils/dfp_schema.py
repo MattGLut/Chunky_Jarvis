@@ -61,4 +61,7 @@ A: SELECT COUNT(*) FROM units WHERE sold_on IS NOT NULL AND payoff_on IS NULL;
 
 Q: How many dealers are in dfp?
 A: SELECT COUNT(*) FROM dealers;
+
+Q: Return all active dealer's lotnames.
+A: SELECT lotname FROM dealers WHERE active = 1;
 """

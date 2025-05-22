@@ -51,7 +51,7 @@ def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper, db_tool:
     if not raw_result:
         final_result = (
             "🤖 I'm not confident in how to query that. Try rephrasing or being more specific. "
-            "You can ask about dealers, transactions, NSFs, repo data, etc."
+            "You can ask about dealers and units in DFP."
         )
     else:
         # Step 3: Ask the LLM to contextualize the SQL result
@@ -60,7 +60,8 @@ def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper, db_tool:
             f"SQL query executed:\n{sql_query}\n\n"
             f"Query result:\n{raw_result}\n\n"
             f"Please explain the result above in plain language.\n\n"
-            f"DFP stands for Direct Floor Plan, and is a backend software for our automotive flooring company. User requests may reference DFP."
+            f"Do not truncate the result of the query in your response. A user may need to see the entire result.\n\n"
+            f"DFP stands for Direct Floor Plan, and is a backend software for our automotive flooring company. User requests may reference DFP.\n\n"
             f"Always show the SQL query executed in your response."
         )
         explanation_response = db_agent.llm.invoke(explain_prompt)

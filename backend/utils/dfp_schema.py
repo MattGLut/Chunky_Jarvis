@@ -17,7 +17,7 @@ units (
     repo_on DATETIME, # The date the unit was reposessed
     sold_on DATETIME, # The date the unit was sold
     payoff_on DATETIME, # The date the unit was paid off
-    repo INT # The repo status of the unit
+    repo INT # The repossession status of the unit
 )
 """
 
@@ -36,8 +36,8 @@ Enums:
     2002: 'Hidden Prospect'
 
   units.repo:
-    1: 'Repo'
-    2: 'Not Repo'
+    1: 'Repossessed'
+    2: 'Not Repossessed'
 """
 
 DFP_RELATIONSHIPS = """

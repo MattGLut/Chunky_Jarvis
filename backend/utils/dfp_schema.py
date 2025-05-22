@@ -73,4 +73,7 @@ A: SELECT COUNT(*) FROM dealers;
 
 Q: Return all active dealer's lotnames.
 A: SELECT lotname FROM dealers WHERE active = 1;
+
+Q: Return all dealer users who have not accepted the new terms and conditions of the DFP system.
+A: SELECT * FROM dealer_users WHERE accepted_new_terms_at IS NULL;
 """

@@ -20,6 +20,7 @@ from backend.tools.dfp_db_tool import DFPDatabaseTool
 supervisor_llm = ChatOllama(model=os.getenv("SUPERVISOR_MODEL", "llama3"), temperature=0.0)
 ollama_model = ChatOllama(model=os.getenv("OLLAMA_MODEL", "mistral"))
 reflection_llm = ChatOllama(model=os.getenv("REFLECTION_MODEL", "phi"))
+sql_llm = ChatOllama(model=os.getenv("SQL_MODEL", "llama3"), temperature=0.0)
 
 # Agents
 tavily_tool = TavilySearch(
@@ -36,7 +37,7 @@ ocr_agent = FakeBindToolsWrapper(ollama_model, [ocr_tool])
 # math_agent = FakeBindToolsWrapper(ollama_model, [MathTool()])
 llm_agent = FakeBindToolsWrapper(ollama_model, [])
 dealer_risk_agent = FakeBindToolsWrapper(ollama_model, [dealer_risk_tool])
-dfp_db_agent = FakeBindToolsWrapper(ollama_model, [])
+dfp_db_agent = FakeBindToolsWrapper(sql_llm, [])
 
 # print(f"Research agent tools: {[tool.name for tool in research_agent.tool_dict.values()]}")
 # print(f"Math agent tools: {[tool.name for tool in math_agent.tool_dict.values()]}")

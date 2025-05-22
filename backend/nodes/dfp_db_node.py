@@ -1,6 +1,6 @@
 from backend.utils.supervisor_state import SupervisorState
 from backend.tools.fake_bind_tools import FakeBindToolsWrapper
-from backend.utils.dfp_schema import DFP_SCHEMA, DFP_FEWSHOT_EXAMPLES
+from backend.utils.dfp_schema import DFP_SCHEMA, DFP_FEWSHOT_EXAMPLES, DFP_RELATIONSHIPS, DFP_ENUMS
 from backend.tools.dfp_db_tool import DFPDatabaseTool
 import time
 from datetime import datetime
@@ -29,6 +29,8 @@ def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper, db_tool:
                 "Dealers with an active value of 999, 2000, or 2002 are rarely asked about and should be excluded by default.\n\n"
                 f"Today's date and time is {datetime.now(pytz.timezone('America/Chicago')).strftime('%Y-%m-%d %H:%M:%S')}\n\n"
                 f"Schema:\n{DFP_SCHEMA}\n\n"
+                f"Relationships between tables:\n{DFP_RELATIONSHIPS}\n\n"
+                f"Column values and enum mappings:\n{DFP_ENUMS}\n\n"
                 f"Here are some valid query examples:\n{DFP_FEWSHOT_EXAMPLES}\n\n"
                 f"User request: {current_task}\nSQL query:"
             )

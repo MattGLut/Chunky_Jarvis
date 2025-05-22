@@ -26,6 +26,7 @@ def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper, db_tool:
                 "- DO NOT reference columns that do not exist in the provided schema.\n"
                 "- If a request is unclear or references unknown columns, return: SELECT 'Unclear request — cannot generate safe query';\n\n"
                 "DFP stands for Direct Floor Plan, the internal backend for an automotive flooring company. Units with a non-null 'reverse_on' field are considered reversed and should be excluded by default.\n\n"
+                "Dealers with an active value of 999, 2000, or 2002 are rarely asked about and should be excluded by default.\n\n"
                 f"Today's date and time is {datetime.now(pytz.timezone('America/Chicago')).strftime('%Y-%m-%d %H:%M:%S')}\n\n"
                 f"Schema:\n{DFP_SCHEMA}\n\n"
                 f"Here are some valid query examples:\n{DFP_FEWSHOT_EXAMPLES}\n\n"

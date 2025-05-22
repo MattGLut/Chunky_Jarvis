@@ -53,6 +53,7 @@ DFP_RELATIONSHIPS = """
 Relationships:
 
 dealers.id = units.dealer_id
+dealers.id = dealer_users.dealer_id
 """
 
 DFP_FEWSHOT_EXAMPLES = """

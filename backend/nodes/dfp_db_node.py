@@ -51,7 +51,8 @@ def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper, db_tool:
             f"User request: {current_task}\n\n"
             f"SQL query executed:\n{sql_query}\n\n"
             f"Query result:\n{raw_result}\n\n"
-            f"Please explain the result above in plain language."
+            f"Please explain the result above in plain language.\n\n"
+            f"Be sure to show the SQL query executed in the prompt."
         )
         explanation_response = db_agent.llm.invoke(explain_prompt)
         final_result = explanation_response.content.strip() if hasattr(explanation_response, "content") else str(explanation_response).strip()

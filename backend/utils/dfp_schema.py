@@ -50,7 +50,7 @@ DFP_FEWSHOT_EXAMPLES = """
 Q: How many active dealers are there?
 A: SELECT COUNT(*) FROM dealers WHERE active = 1;
 
-Q: Show the 10 most recent repo'd units.
+Q: Show the 10 most recent repossessed units.
 A: SELECT * FROM units WHERE repo_on IS NOT NULL ORDER BY repo_on DESC LIMIT 10;
 
 Q: How many units are floored?

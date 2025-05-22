@@ -19,14 +19,16 @@ def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper, db_tool:
         try:
             # Step 1: Generate SQL using LLM with schema and few-shot context
             prompt = (
-                f"You are a SQL assistant for an automotive finance system. "
-                f"DFP stands for Direct Floor Plan, and is a backend software for our automotive flooring company. User requests may reference DFP."
-                f"Use the following schema to generate a safe SELECT query in response to the user request.\n\n"
-                f"Commonly in dfp, units are reversed, marked as such by the reverse_on column.\n\n"
-                f"Units with non empty values in this reverse_on column are not to be included in queries unless specifically asked for.\n\n"
+                "You are a SQL generation assistant for an internal analytics tool.\n\n"
+                "Strict rules you MUST follow:\n"
+                "- ONLY generate a single SELECT query.\n"
+                "- NEVER include comments, notes, or explanations in the query.\n"
+                "- DO NOT reference columns that do not exist in the provided schema.\n"
+                "- If a request is unclear or references unknown columns, return: SELECT 'Unclear request — cannot generate safe query';\n\n"
+                "DFP stands for Direct Floor Plan, the internal backend for an automotive flooring company. Units with a non-null 'reverse_on' field are considered reversed and should be excluded by default.\n\n"
                 f"Today's date and time is {datetime.now(pytz.timezone('America/Chicago')).strftime('%Y-%m-%d %H:%M:%S')}\n\n"
                 f"Schema:\n{DFP_SCHEMA}\n\n"
-                f"Here are some examples:\n{DFP_FEWSHOT_EXAMPLES}\n\n"
+                f"Here are some valid query examples:\n{DFP_FEWSHOT_EXAMPLES}\n\n"
                 f"User request: {current_task}\nSQL query:"
             )
 

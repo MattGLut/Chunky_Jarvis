@@ -58,7 +58,7 @@ dealers.id = dealer_users.dealer_id
 
 DFP_FEWSHOT_EXAMPLES = """
 Q: How many active dealers are there?
-A: SELECT COUNT(*) FROM dealers WHERE active = 1;
+A: SELECT COUNT(*) FROM dealers WHERE active = 1 AND active NOT IN (999, 2000, 2002);
 
 Q: Show the 10 most recent repossessed units.
 A: SELECT * FROM units WHERE repo_on IS NOT NULL ORDER BY repo_on DESC LIMIT 10;
@@ -77,4 +77,7 @@ A: SELECT lotname FROM dealers WHERE active = 1;
 
 Q: Return all dealer users who have not accepted the new terms and conditions of the DFP system.
 A: SELECT * FROM dealer_users WHERE accepted_new_terms_at IS NULL;
+
+Q: How many dealers have accepted the new terms of service?
+A: SELECT COUNT(DISTINCT d.id) FROM dealers d JOIN dealer_users du ON du.dealer_id = d.id WHERE du.accepted_new_terms_at IS NOT NULL AND d.active NOT IN (999, 2000, 2002);
 """

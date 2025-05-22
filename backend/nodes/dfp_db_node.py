@@ -66,7 +66,12 @@ def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper, db_tool:
             f"Always show the SQL query executed in your response."
         )
         explanation_response = db_agent.llm.invoke(explain_prompt)
-        final_result = explanation_response.content.strip() if hasattr(explanation_response, "content") else str(explanation_response).strip()
+        final_result = (
+            f"### User Request\n{current_task}\n\n"
+            f"### SQL Query\n```sql\n{sql_query}\n```\n\n"
+            f"### Query Result\n```\n{raw_result}\n```\n\n"
+            f"### Explanation\n{explanation_response.content.strip() if hasattr(explanation_response, 'content') else str(explanation_response).strip()}"
+        )
 
     print(f"[DFP DB Node Result]: {final_result}")
 

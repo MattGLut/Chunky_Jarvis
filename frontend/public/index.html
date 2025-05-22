@@ -237,7 +237,7 @@
 
         const agentDiv = document.createElement('div');
         agentDiv.className = 'chat-bubble agent';
-        agentDiv.innerHTML = `<strong>Agent:</strong> ${entry.assistant}`;
+        agentDiv.innerHTML = `<strong>Agent:</strong><br><pre>${entry.assistant}</pre>`;
         historyDiv.appendChild(agentDiv);
       });
       historyDiv.scrollTop = historyDiv.scrollHeight;

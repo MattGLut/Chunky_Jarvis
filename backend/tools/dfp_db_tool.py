@@ -38,6 +38,6 @@ class DFPDatabaseTool:
                     if not rows:
                         return "Query returned no results."
                     df = pd.DataFrame(rows)
-                    return df.head(10).to_markdown(index=False)
+                    return df.to_markdown(index=False)
         except Exception as e:
             return f"Database query failed: {e}"

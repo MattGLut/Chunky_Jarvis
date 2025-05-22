@@ -56,7 +56,7 @@ def dfp_db_node(state: SupervisorState, db_agent: FakeBindToolsWrapper, db_tool:
             f"Query result:\n{raw_result}\n\n"
             f"Please explain the result above in plain language.\n\n"
             f"DFP stands for Direct Floor Plan, and is a backend software for our automotive flooring company. User requests may reference DFP."
-            f"Be sure to show the SQL query executed in the prompt."
+            f"Always show the SQL query executed in your response."
         )
         explanation_response = db_agent.llm.invoke(explain_prompt)
         final_result = explanation_response.content.strip() if hasattr(explanation_response, "content") else str(explanation_response).strip()
